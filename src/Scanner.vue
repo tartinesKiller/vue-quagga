@@ -22,13 +22,13 @@
         default: 'code_128_reader',
       },
       readerSize: {
-        width : {
-          type: Number,
-          default: 640,
-        },
-        height: {
-          type: Number,
-          default: 480,
+        type: Object,
+        required: false,
+        default: () => {
+          return {
+            width: 640,
+            height: 480,
+          }
         }
       }
     },
