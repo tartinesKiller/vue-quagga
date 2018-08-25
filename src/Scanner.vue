@@ -1,6 +1,6 @@
 <template>
-  <div id="interactive" class="viewport scanner">
-    <video></video>
+  <div id="interactive" class="viewport scanner" :style="`height: ${readerSize.height}px;`">
+    <video :style="`width: 100%;`"></video>
     <canvas class="drawingBuffer"></canvas>
   </div>
 </template>
