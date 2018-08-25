@@ -30,6 +30,10 @@
             height: 480,
           }
         }
+      },
+      value: {
+        type: Boolean,
+        required: true,
       }
     },
     data: function () {
@@ -61,14 +65,7 @@
       }
     },
     mounted: function () {
-      Quagga.init(this.quaggaState, function (err) {
-        if (err) {
-          return console.log(err);
-        }
-        Quagga.start();
-      });
-      Quagga.onDetected(this.onDetected ? this.onDetected : this._onDetected);
-      Quagga.onProcessed(this.onProcessed ? this.onProcessed : this._onProcessed);
+      this.init();
     },
     methods: {
       _onProcessed: function (result) {
@@ -93,10 +90,37 @@
           }
         }
       },
+      async init() {
+        return new Promise((resolve, reject) => {
+          Quagga.init(this.quaggaState, (err) => {
+            if (err) {
+              return console.log(err);
+            }
+            resolve();
+          });
+          Quagga.onDetected(this.onDetected ? this.onDetected : this._onDetected);
+          Quagga.onProcessed(this.onProcessed ? this.onProcessed : this._onProcessed);
+        });
+      },
+      startProcessing() {
+        Quagga.start();
+        this.$emit("input", true);
+      },
       _onDetected: function (result) {
         console.log('detected: ', result);
       },
-    }
+    },
+    watch: {
+      value(newValue, oldValue) {
+        if(!newValue) {
+          Quagga.stop();
+        } else {
+          this.init().then(() => {
+            this.startProcessing();
+          });
+        }
+      }
+    },
   }
 </script>
 
