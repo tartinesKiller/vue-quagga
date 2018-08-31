@@ -1,7 +1,7 @@
 {
   "name": "vue-quaggajs",
   "description": "A Vue.js component, accessing the device camera and allowing users to read barcodes, within the browser",
-  "main": "dist/vue-quagga.js",
+  "main": "src/index.js",
   "cdn": "dist/vue-quagga.min.js",
   "version": "1.0.5",
   "author": "Shintaro Tanaka <sin_tanaka@jsl.co.jp>",
@@ -34,9 +34,12 @@
     "not ie <= 8"
   ],
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",

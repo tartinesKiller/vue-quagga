@@ -18,8 +18,8 @@
         type: Function,
       },
       readerType: {
-        type: String,
-        default: 'code_128_reader',
+        type: [Array],
+        default: () => { return [{ format: 'code_128_reader', config: {} }] },
       },
       readerSize: {
         type: Object,
@@ -55,17 +55,15 @@
           numOfWorkers: 2,
           frequency: 10,
           decoder: {
-            readers: [{
-              format: this.readerType,
-              config: {}
-            }]
+            readers: this.readerType
           },
           locate: true
         },
       }
     },
-    mounted: function () {
-      this.init();
+    async mounted () {
+      await this.init();
+      this.startProcessing();
     },
     methods: {
       _onProcessed: function (result) {
@@ -98,7 +96,7 @@
             }
             resolve();
           });
-          Quagga.onDetected(this.onDetected ? this.onDetected : this._onDetected);
+          Quagga.onDetected(this._onDetected);
           Quagga.onProcessed(this.onProcessed ? this.onProcessed : this._onProcessed);
         });
       },
@@ -108,6 +106,7 @@
       },
       _onDetected: function (result) {
         console.log('detected: ', result);
+        this.$emit("detected", result);
       },
     },
     watch: {
