@@ -1,7 +1,7 @@
 {
   "name": "vue-quaggajs",
   "description": "A Vue.js component, accessing the device camera and allowing users to read barcodes, within the browser",
-  "main": "dist/vue-quagga.min.js",
+  "main": "dist/vue-quagga.js",
   "cdn": "dist/vue-quagga.min.js",
   "version": "1.0.5",
   "author": "Shintaro Tanaka <sin_tanaka@jsl.co.jp>",

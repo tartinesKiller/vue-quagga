@@ -34,6 +34,11 @@
       value: {
         type: Boolean,
         required: true,
+      },
+      processing: {
+        type: Boolean,
+        required: false,
+        default: true,
       }
     },
     data: function () {
@@ -96,8 +101,10 @@
             }
             resolve();
           });
-          Quagga.onDetected(this._onDetected);
-          Quagga.onProcessed(this.onProcessed ? this.onProcessed : this._onProcessed);
+          if(this.processing) {
+            Quagga.onDetected(this._onDetected);
+            Quagga.onProcessed(this.onProcessed ? this.onProcessed : this._onProcessed);
+          }
         });
       },
       startProcessing() {
@@ -117,6 +124,15 @@
           this.init().then(() => {
             this.startProcessing();
           });
+        }
+      },
+      processing (newValue, oldValue) {
+        if(!newValue) {
+          Quagga.onDetected(() => { });
+          Quagga.onProcessed(() => { });
+        } else {
+          Quagga.onDetected(this._onDetected);
+          Quagga.onProcessed(this.onProcessed ? this.onProcessed : this._onProcessed);
         }
       }
     },
