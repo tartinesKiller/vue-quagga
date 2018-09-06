@@ -39,6 +39,11 @@
         type: Boolean,
         required: false,
         default: true,
+      },
+      numberOfWorkers: {
+        type: Number,
+        required: false,
+        default: () => navigator.hardwareConcurrency || 4,
       }
     },
     data: function () {
@@ -57,7 +62,7 @@
             patchSize: 'medium',
             halfSample: true
           },
-          numOfWorkers: 2,
+          numOfWorkers: this.numberOfWorkers,
           frequency: 10,
           decoder: {
             readers: this.readerType
