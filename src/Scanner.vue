@@ -124,6 +124,8 @@
     watch: {
       value(newValue, oldValue) {
         if(!newValue) {
+          Quagga.offProcessed(this.onProcessed ? this.onProcessed : this._onProcessed);
+          Quagga.offDetected(this._onDetected);
           Quagga.stop();
         } else {
           this.init().then(() => {
@@ -133,8 +135,8 @@
       },
       processing (newValue, oldValue) {
         if(!newValue) {
-          Quagga.onDetected(() => { });
-          Quagga.onProcessed(() => { });
+          Quagga.offProcessed(this.onProcessed ? this.onProcessed : this._onProcessed);
+          Quagga.offDetected(this._onDetected);
         } else {
           Quagga.onDetected(this._onDetected);
           Quagga.onProcessed(this.onProcessed ? this.onProcessed : this._onProcessed);
