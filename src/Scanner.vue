@@ -71,9 +71,10 @@
         },
       }
     },
-    async mounted () {
-      await this.init();
-      this.startProcessing();
+    mounted () {
+      this.init().then(() => {
+        this.startProcessing();
+      });
     },
     methods: {
       _onProcessed: function (result) {
@@ -98,7 +99,7 @@
           }
         }
       },
-      async init() {
+      init() {
         return new Promise((resolve, reject) => {
           Quagga.init(this.quaggaState, (err) => {
             if (err) {
